@@ -188,8 +188,8 @@ def main(cfg: DictConfig):
 
     dataset_config = cfg["dataset"]
 
-    if dataset_config["name"] not in ("canopus", "msg"):
-        raise NotImplementedError("Unknown dataset {}".format(cfg["dataset"]))
+    # Support any dataset name (canopus, msg, antibio, etc.)
+    # The dataset module will handle loading based on the config
 
     datamodule = spec2mol_dataset.Spec2MolDataModule(cfg) # TODO: Add hyper for n_bits
     dataset_infos = spec2mol_dataset.Spec2MolDatasetInfos(datamodule, cfg)

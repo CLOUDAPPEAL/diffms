@@ -1,0 +1,27 @@
+{
+    "cand_form": "C22H24N2O9",
+    "cand_ion": "[M-H]-",
+    "output_tbl": {
+        "mz": [
+            61.9884
+        ],
+        "ms2_inten": [
+            1.0
+        ],
+        "mono_mass": [
+            61.9884
+        ],
+        "abs_mass_diff": [
+            0.0
+        ],
+        "mass_diff": [
+            0.0
+        ],
+        "formula": [
+            "C22H24N2O9"
+        ],
+        "ions": [
+            "[M-H]-"
+        ]
+    }
+}

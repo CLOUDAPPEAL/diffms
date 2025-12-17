@@ -1,0 +1,27 @@
+{
+    "cand_form": "C14H15N7",
+    "cand_ion": "[M+H]+",
+    "output_tbl": {
+        "mz": [
+            98.9851
+        ],
+        "ms2_inten": [
+            1.0
+        ],
+        "mono_mass": [
+            98.9851
+        ],
+        "abs_mass_diff": [
+            0.0
+        ],
+        "mass_diff": [
+            0.0
+        ],
+        "formula": [
+            "C14H15N7"
+        ],
+        "ions": [
+            "[M+H]+"
+        ]
+    }
+}

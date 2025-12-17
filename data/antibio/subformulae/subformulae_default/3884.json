@@ -1,0 +1,27 @@
+{
+    "cand_form": "C43H74N2O14",
+    "cand_ion": "[M+H]+",
+    "output_tbl": {
+        "mz": [
+            227.728
+        ],
+        "ms2_inten": [
+            1.0
+        ],
+        "mono_mass": [
+            227.728
+        ],
+        "abs_mass_diff": [
+            0.0
+        ],
+        "mass_diff": [
+            0.0
+        ],
+        "formula": [
+            "C43H74N2O14"
+        ],
+        "ions": [
+            "[M+H]+"
+        ]
+    }
+}

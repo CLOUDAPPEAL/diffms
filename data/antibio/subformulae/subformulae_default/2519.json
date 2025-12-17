@@ -1,0 +1,27 @@
+{
+    "cand_form": "C24H29N5O3",
+    "cand_ion": "[M-H]-",
+    "output_tbl": {
+        "mz": [
+            178.0788
+        ],
+        "ms2_inten": [
+            1.0
+        ],
+        "mono_mass": [
+            178.0788
+        ],
+        "abs_mass_diff": [
+            0.0
+        ],
+        "mass_diff": [
+            0.0
+        ],
+        "formula": [
+            "C24H29N5O3"
+        ],
+        "ions": [
+            "[M-H]-"
+        ]
+    }
+}

@@ -1,0 +1,27 @@
+{
+    "cand_form": "C47H83NO17",
+    "cand_ion": "[M+H]+",
+    "output_tbl": {
+        "mz": [
+            227.755
+        ],
+        "ms2_inten": [
+            1.0
+        ],
+        "mono_mass": [
+            227.755
+        ],
+        "abs_mass_diff": [
+            0.0
+        ],
+        "mass_diff": [
+            0.0
+        ],
+        "formula": [
+            "C47H83NO17"
+        ],
+        "ions": [
+            "[M+H]+"
+        ]
+    }
+}

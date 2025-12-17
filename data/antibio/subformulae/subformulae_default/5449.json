@@ -1,0 +1,27 @@
+{
+    "cand_form": "C25H38O5",
+    "cand_ion": "[M+H]+",
+    "output_tbl": {
+        "mz": [
+            60.0809
+        ],
+        "ms2_inten": [
+            1.0
+        ],
+        "mono_mass": [
+            60.0809
+        ],
+        "abs_mass_diff": [
+            0.0
+        ],
+        "mass_diff": [
+            0.0
+        ],
+        "formula": [
+            "C25H38O5"
+        ],
+        "ions": [
+            "[M+H]+"
+        ]
+    }
+}

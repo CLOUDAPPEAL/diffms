@@ -1,0 +1,34 @@
+{
+    "cand_form": "C14H9Cl3N2OS",
+    "cand_ion": "[M-H]-",
+    "output_tbl": {
+        "mz": [
+            59.0139,
+            192.9617
+        ],
+        "ms2_inten": [
+            1.0,
+            0.7780200772161971
+        ],
+        "mono_mass": [
+            59.0139,
+            192.9617
+        ],
+        "abs_mass_diff": [
+            0.0,
+            0.0
+        ],
+        "mass_diff": [
+            0.0,
+            0.0
+        ],
+        "formula": [
+            "C14H9Cl3N2OS",
+            "C14H9Cl3N2OS"
+        ],
+        "ions": [
+            "[M-H]-",
+            "[M-H]-"
+        ]
+    }
+}

@@ -1,0 +1,27 @@
+{
+    "cand_form": "C8H10ClN5O3S",
+    "cand_ion": "[M+H]+",
+    "output_tbl": {
+        "mz": [
+            91.0542
+        ],
+        "ms2_inten": [
+            1.0
+        ],
+        "mono_mass": [
+            91.0542
+        ],
+        "abs_mass_diff": [
+            0.0
+        ],
+        "mass_diff": [
+            0.0
+        ],
+        "formula": [
+            "C8H10ClN5O3S"
+        ],
+        "ions": [
+            "[M+H]+"
+        ]
+    }
+}

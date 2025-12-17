@@ -1,0 +1,34 @@
+{
+    "cand_form": "C16H16ClN3O3S",
+    "cand_ion": "[M+H]+",
+    "output_tbl": {
+        "mz": [
+            132.0808,
+            133.0846
+        ],
+        "ms2_inten": [
+            1.0,
+            0.05925267267055688
+        ],
+        "mono_mass": [
+            132.0808,
+            133.0846
+        ],
+        "abs_mass_diff": [
+            0.0,
+            0.0
+        ],
+        "mass_diff": [
+            0.0,
+            0.0
+        ],
+        "formula": [
+            "C16H16ClN3O3S",
+            "C16H16ClN3O3S"
+        ],
+        "ions": [
+            "[M+H]+",
+            "[M+H]+"
+        ]
+    }
+}

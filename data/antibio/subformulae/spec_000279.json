@@ -1,0 +1,27 @@
+{
+    "cand_form": "C42H69NO15",
+    "cand_ion": "[M+H]+",
+    "output_tbl": {
+        "mz": [
+            109.0648
+        ],
+        "ms2_inten": [
+            1.0
+        ],
+        "mono_mass": [
+            109.0648
+        ],
+        "abs_mass_diff": [
+            0.0
+        ],
+        "mass_diff": [
+            0.0
+        ],
+        "formula": [
+            "C42H69NO15"
+        ],
+        "ions": [
+            "[M+H]+"
+        ]
+    }
+}

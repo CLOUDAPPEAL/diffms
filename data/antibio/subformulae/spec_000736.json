@@ -1,0 +1,27 @@
+{
+    "cand_form": "C40H68O11",
+    "cand_ion": "[M+H]+",
+    "output_tbl": {
+        "mz": [
+            125.0961
+        ],
+        "ms2_inten": [
+            1.0
+        ],
+        "mono_mass": [
+            125.0961
+        ],
+        "abs_mass_diff": [
+            0.0
+        ],
+        "mass_diff": [
+            0.0
+        ],
+        "formula": [
+            "C40H68O11"
+        ],
+        "ions": [
+            "[M+H]+"
+        ]
+    }
+}

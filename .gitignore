@@ -137,7 +137,7 @@ archives/*
 .env
 results/*
 logs/*
-data/
+
 
 checkpoints/*
 checkpoints_internal/*

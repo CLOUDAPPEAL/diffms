@@ -1,0 +1,27 @@
+{
+    "cand_form": "C6H8N4O4",
+    "cand_ion": "[M+H]+",
+    "output_tbl": {
+        "mz": [
+            119.0189
+        ],
+        "ms2_inten": [
+            1.0
+        ],
+        "mono_mass": [
+            119.0189
+        ],
+        "abs_mass_diff": [
+            0.0
+        ],
+        "mass_diff": [
+            0.0
+        ],
+        "formula": [
+            "C6H8N4O4"
+        ],
+        "ions": [
+            "[M+H]+"
+        ]
+    }
+}

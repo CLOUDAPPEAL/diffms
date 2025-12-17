@@ -1,0 +1,27 @@
+{
+    "cand_form": "C36H62N2O11",
+    "cand_ion": "[M+H]+",
+    "output_tbl": {
+        "mz": [
+            227.7538
+        ],
+        "ms2_inten": [
+            1.0
+        ],
+        "mono_mass": [
+            227.7538
+        ],
+        "abs_mass_diff": [
+            0.0
+        ],
+        "mass_diff": [
+            0.0
+        ],
+        "formula": [
+            "C36H62N2O11"
+        ],
+        "ions": [
+            "[M+H]+"
+        ]
+    }
+}

@@ -1,0 +1,27 @@
+{
+    "cand_form": "C25H43NO18",
+    "cand_ion": "[M+H]+",
+    "output_tbl": {
+        "mz": [
+            81.0335
+        ],
+        "ms2_inten": [
+            1.0
+        ],
+        "mono_mass": [
+            81.0335
+        ],
+        "abs_mass_diff": [
+            0.0
+        ],
+        "mass_diff": [
+            0.0
+        ],
+        "formula": [
+            "C25H43NO18"
+        ],
+        "ions": [
+            "[M+H]+"
+        ]
+    }
+}

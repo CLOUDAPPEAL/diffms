@@ -1,0 +1,27 @@
+{
+    "cand_form": "C18H20N2O6",
+    "cand_ion": "[M-H]-",
+    "output_tbl": {
+        "mz": [
+            227.7235
+        ],
+        "ms2_inten": [
+            1.0
+        ],
+        "mono_mass": [
+            227.7235
+        ],
+        "abs_mass_diff": [
+            0.0
+        ],
+        "mass_diff": [
+            0.0
+        ],
+        "formula": [
+            "C18H20N2O6"
+        ],
+        "ions": [
+            "[M-H]-"
+        ]
+    }
+}

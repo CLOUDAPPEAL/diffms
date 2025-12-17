@@ -1,0 +1,27 @@
+{
+    "cand_form": "C19H17N3O4S2",
+    "cand_ion": "[M+H]+",
+    "output_tbl": {
+        "mz": [
+            0.0
+        ],
+        "ms2_inten": [
+            1.0
+        ],
+        "mono_mass": [
+            0.0
+        ],
+        "abs_mass_diff": [
+            0.0
+        ],
+        "mass_diff": [
+            0.0
+        ],
+        "formula": [
+            "C19H17N3O4S2"
+        ],
+        "ions": [
+            "[M+H]+"
+        ]
+    }
+}

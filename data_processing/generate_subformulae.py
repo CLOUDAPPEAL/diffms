@@ -189,11 +189,32 @@ def main():
     skipped = 0
     
     for idx, row in labels_df.iterrows():
-        # Use 'name' column for spec_name, which should contain the numeric ID
-        spec_name = str(row['name'])
+        # Use 'spec' or 'name' column for spec_name
+        if 'spec' in row:
+            spec_name = str(row['spec'])
+        else:
+            spec_name = str(row['name'])
+
         smiles = row.get('smiles', '')
+        if pd.isna(smiles): smiles = ''
         formula = row.get('formula', '')
+        if pd.isna(formula): formula = ''
         
+        # Load spectrum peaks first to get metadata
+        ms_path = spec_folder / f"{spec_name}.ms"
+        if not ms_path.exists():
+            print(f"⚠ Skipping {spec_name}: .ms file not found at {ms_path}")
+            skipped += 1
+            continue
+        
+        metadata, peaks = parse_ms_file(ms_path)
+
+        # Try to get formula/smiles from metadata if not in labels
+        if not formula and 'formula' in metadata:
+            formula = metadata['formula']
+        if not smiles and 'smiles' in metadata:
+            smiles = metadata['smiles']
+
         # Try to get formula from SMILES if not provided
         if not formula and smiles:
             formula = smiles_to_formula(smiles)
@@ -203,14 +224,7 @@ def main():
             skipped += 1
             continue
         
-        # Load spectrum peaks
-        ms_path = spec_folder / f"{spec_name}.ms"
-        if not ms_path.exists():
-            print(f"⚠ Skipping {spec_name}: .ms file not found at {ms_path}")
-            skipped += 1
-            continue
-        
-        metadata, peaks = parse_ms_file(ms_path)
+
         
         if not peaks:
             print(f"⚠ Skipping {spec_name}: no peaks found")

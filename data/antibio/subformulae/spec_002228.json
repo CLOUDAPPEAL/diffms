@@ -1,0 +1,27 @@
+{
+    "cand_form": "C35H59NO13",
+    "cand_ion": "[M+H]+",
+    "output_tbl": {
+        "mz": [
+            227.7555
+        ],
+        "ms2_inten": [
+            1.0
+        ],
+        "mono_mass": [
+            227.7555
+        ],
+        "abs_mass_diff": [
+            0.0
+        ],
+        "mass_diff": [
+            0.0
+        ],
+        "formula": [
+            "C35H59NO13"
+        ],
+        "ions": [
+            "[M+H]+"
+        ]
+    }
+}

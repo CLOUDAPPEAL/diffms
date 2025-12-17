@@ -1,4 +1,4 @@
-name	formula	smiles	inchikey	spec_file	precursor_type	collision_energy
+spec	formula	smiles	inchikey	spec_file	precursor_type	collision_energy
 spec_000000	C15H13N3O2S	COC(=O)NC1=NC2=C(N1)C=C(C=C2)SC3=CC=CC=C3	HDDSHPAODJUKPD-UHFFFAOYSA-N	../data/antibio/spec_files/spec_000000.ms	[M+H]+	10.0 eV
 spec_000001	C15H13N3O2S	COC(=O)NC1=NC2=C(N1)C=C(C=C2)SC3=CC=CC=C3	HDDSHPAODJUKPD-UHFFFAOYSA-N	../data/antibio/spec_files/spec_000001.ms	[M+H]+	20.0 eV
 spec_000002	C15H13N3O2S	COC(=O)NC1=NC2=C(N1)C=C(C=C2)SC3=CC=CC=C3	HDDSHPAODJUKPD-UHFFFAOYSA-N	../data/antibio/spec_files/spec_000002.ms	[M+H]+	30.0 eV

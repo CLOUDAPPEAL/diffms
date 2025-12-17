@@ -1,0 +1,27 @@
+{
+    "cand_form": "C19H11Cl2I2NO3",
+    "cand_ion": "[M-H]-",
+    "output_tbl": {
+        "mz": [
+            126.905
+        ],
+        "ms2_inten": [
+            1.0
+        ],
+        "mono_mass": [
+            126.905
+        ],
+        "abs_mass_diff": [
+            0.0
+        ],
+        "mass_diff": [
+            0.0
+        ],
+        "formula": [
+            "C19H11Cl2I2NO3"
+        ],
+        "ions": [
+            "[M-H]-"
+        ]
+    }
+}

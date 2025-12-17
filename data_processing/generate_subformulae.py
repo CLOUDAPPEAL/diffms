@@ -21,7 +21,6 @@ from rdkit import Chem
 from rdkit.Chem import Descriptors
 from rdkit.Chem.rdMolDescriptors import CalcMolFormula
 
-
 def parse_ms_file(ms_path: Path) -> Tuple[Dict, List[Tuple[float, float]]]:
     """Parse a SIRIUS-like .ms file.
     
@@ -81,14 +80,7 @@ def smiles_to_formula(smiles: str) -> Optional[str]:
         return None
 
 
-def get_precursor_mz(row: pd.Series, precursor_field: str) -> Optional[float]:
-    """Extract precursor m/z from row."""
-    if precursor_field in row and pd.notna(row[precursor_field]):
-        try:
-            return float(row[precursor_field])
-        except (ValueError, TypeError):
-            pass
-    return None
+
 
 
 def normalize_intensities(intensities: List[float]) -> List[float]:
@@ -183,9 +175,7 @@ def main():
     parser.add_argument('--labels-file', required=True, help='Path to labels.tsv')
     parser.add_argument('--spec-folder', required=True, help='Folder containing .ms files')
     parser.add_argument('--out-dir', required=True, help='Output directory for JSON files')
-    parser.add_argument('--precursor-mz-field', default='PrecursorMZ', 
-                        help='Column name in labels for precursor m/z')
-    parser.add_argument('--ion-type', default='[M+H]+', help='Default ionization type')
+    parser.add_argument('--ion-type', default='[M+H]+', help='Default ionization type if not in .ms file')
     
     args = parser.parse_args()
     
@@ -199,7 +189,8 @@ def main():
     skipped = 0
     
     for idx, row in labels_df.iterrows():
-        spec_name = row['spec']
+        # Use 'name' column for spec_name, which should contain the numeric ID
+        spec_name = str(row['name'])
         smiles = row.get('smiles', '')
         formula = row.get('formula', '')
         
@@ -215,7 +206,7 @@ def main():
         # Load spectrum peaks
         ms_path = spec_folder / f"{spec_name}.ms"
         if not ms_path.exists():
-            print(f"⚠ Skipping {spec_name}: .ms file not found")
+            print(f"⚠ Skipping {spec_name}: .ms file not found at {ms_path}")
             skipped += 1
             continue
         
@@ -226,8 +217,15 @@ def main():
             skipped += 1
             continue
         
-        # Get precursor m/z
-        precursor_mz = get_precursor_mz(row, args.precursor_mz_field)
+        # Get precursor info from .ms file metadata
+        precursor_mz = None
+        if 'pepmass' in metadata:
+            try:
+                precursor_mz = float(metadata['pepmass'])
+            except (ValueError, TypeError):
+                print(f"⚠ Could not parse precursor m/z for {spec_name}: {metadata['pepmass']}")
+
+        ion_type = metadata.get('precursortype', args.ion_type)
         
         # Create entry
         entry = create_subformulae_entry(
@@ -236,7 +234,7 @@ def main():
             formula=formula,
             peaks=peaks,
             precursor_mz=precursor_mz,
-            ion_type=args.ion_type
+            ion_type=ion_type
         )
         
         # Write JSON

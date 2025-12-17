@@ -55,6 +55,10 @@ def get_paired_spectra(
     if "instrument" in compound_id_file.keys():
         name_to_instrument = dict(compound_id_file[["spec", "instrument"]].values)
 
+    name_to_precursor_type = {}
+    if "precursor_type" in compound_id_file.keys():
+        name_to_precursor_type = dict(compound_id_file[["spec", "precursor_type"]].values)
+
     # Note, loading has moved to the dataloader itself
     logging.info(f"Loading paired specs")
     spec_folder = Path(spec_folder) if spec_folder is not None else None
@@ -85,6 +89,9 @@ def get_paired_spectra(
     spectra_instruments = [
         name_to_instrument.get(spectra_name, "") for spectra_name in spectra_names
     ]
+    spectra_precursor_types = [
+        name_to_precursor_type.get(spectra_name, "") for spectra_name in spectra_names
+    ]
 
     logging.info(f"Converting paired samples into Spectra objects")
 
@@ -96,10 +103,11 @@ def get_paired_spectra(
             spectra_file=str(spectra_file),
             spectra_formula=spectra_formula,
             instrument=instrument,
+            precursor_type=precursor_type,
             **kwargs,
         )
-        for spectra_name, spectra_file, spectra_formula, instrument in tq(
-            zip(spectra_names, spectra_files, spectra_formulas, spectra_instruments)
+        for spectra_name, spectra_file, spectra_formula, instrument, precursor_type in tq(
+            zip(spectra_names, spectra_files, spectra_formulas, spectra_instruments, spectra_precursor_types)
         )
     ]
 

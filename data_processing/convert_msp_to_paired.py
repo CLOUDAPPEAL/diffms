@@ -14,11 +14,13 @@ It writes:
   `src.datasets.spectra_utils.parse_spectra` can read.
 
 Usage:
-  python data_processing/convert_msp_to_paired.py \
-      --msp-file path/to/file.msp \
-      --out-spectra-dir ../data/your_dataset/spectra \
-      --out-labels ../data/your_dataset/labels.tsv \
-      --split 0.8 0.1 0.1
+  python convert_msp_to_paired.py \
+      --msp-file ../data/antibio/antibio_new2.msp \
+      --out-spectra-dir ../data/antibio/spec_files \
+      --out-labels ../data/antibio/labels.tsv \
+      --split 0.8 0.1 0.1 \
+      --out-split ../data/antibio/split_80_10_10.tsv \
+      --seed 42
 """
 
 import argparse
@@ -28,6 +30,8 @@ import re
 import csv
 import random
 from typing import List, Dict, Tuple, Optional
+import pandas as pd
+
 
 
 def parse_msp_records(msp_path: str) -> List[Dict]:
@@ -88,17 +92,19 @@ def write_ms_file(rec: Dict, out_path: Path) -> None:
 
     if 'PrecursorMZ' in rec:
         lines.append(f"#PEPMASS {rec.get('PrecursorMZ')}")
+    
+    if 'Precursor_type' in rec:
+        lines.append(f"#PRECURSORTYPE {rec.get('Precursor_type')}")
+
     if 'Formula' in rec:
         lines.append(f"#FORMULA {rec.get('Formula')}")
     if 'SMILES' in rec:
-        lines.append(f"#SMILES {rec.get('SMILES')}")
-    if 'SMILES' not in rec and 'SMILES' in rec:
         lines.append(f"#SMILES {rec.get('SMILES')}")
     if 'InChIKey' in rec:
         lines.append(f"#INCHIKEY {rec.get('InChIKey')}")
 
     # Add a simple spectrum block
-    spectrum_name = rec.get('Name', out_path.stem)
+    spectrum_name = out_path.stem
     lines.append(f">{spectrum_name}")
     for mz, inten in rec.get('peaks', []):
         lines.append(f"{mz} {inten}")
@@ -107,37 +113,35 @@ def write_ms_file(rec: Dict, out_path: Path) -> None:
     out_path.write_text("\n".join(lines), encoding='utf-8')
 
 
-def build_labels(records: List[Dict], spectra_dir: Path, labels_path: Path) -> List[str]:
-    """Write labels.tsv and return list of spec names (filenames without ext).
-
-    Columns: spec, formula, smiles, inchikey, instrument
+def build_labels(records, out_dir):
+    """build_labels.
+    Args:
+        records:
+        out_dir:
     """
-    rows = []
-    for i, rec in enumerate(records):
-        # Use numeric naming: spec_000001, spec_000002, etc.
-        spec_stem = f'spec_{i:06d}'
-
-        # Write .ms file
-        ms_path = spectra_dir / f"{spec_stem}.ms"
-        write_ms_file(rec, ms_path)
-
-        rows.append({
-            'spec': spec_stem,
-            'formula': rec.get('Formula', ''),
-            'smiles': rec.get('SMILES', ''),
-            'inchikey': rec.get('InChIKey', ''),
-            'instrument': rec.get('Instrument', rec.get('Instrument_type', '')),
-        })
-
-    # Write TSV
-    labels_path.parent.mkdir(parents=True, exist_ok=True)
-    with open(labels_path, 'w', newline='', encoding='utf-8') as f:
-        writer = csv.DictWriter(f, fieldnames=['spec', 'formula', 'smiles', 'inchikey', 'instrument'], delimiter='\t')
-        writer.writeheader()
-        for r in rows:
-            writer.writerow(r)
-
-    return [r['spec'] for r in rows]
+    names, formulas, smiles, inchikeys, spec_files, precursor_types = [], [], [], [], [], []
+    if not Path(out_dir).exists():
+        Path(out_dir).mkdir(exist_ok=True, parents=True)
+    for i, record in enumerate(records):
+        spec_name = str(i)
+        names.append(spec_name)
+        formulas.append(record.get("Formula", "Unknown"))
+        smiles.append(record.get("SMILES", "Unknown"))
+        inchikeys.append(record.get("InChIKey", "Unknown"))
+        precursor_types.append(record.get("Precursor_type", "Unknown"))
+        spec_file = Path(out_dir) / f"{spec_name}.ms"
+        spec_files.append(str(spec_file))
+    df = pd.DataFrame(
+        {
+            "name": names,
+            "formula": formulas,
+            "smiles": smiles,
+            "inchikey": inchikeys,
+            "spec_file": spec_files,
+            "precursor_type": precursor_types,
+        }
+    )
+    return df
 
 
 def write_split(specs: List[str], out_split: Path, ratios: Tuple[float, float, float], seed: int = 42) -> None:
@@ -183,11 +187,19 @@ def main():
         print('No records parsed from MSP file.')
         return
 
-    specs = build_labels(records, Path(args.out_spectra_dir), Path(args.out_labels))
+    specs = build_labels(records, Path(args.out_spectra_dir))
+
+    # Write individual spectra files
+    for record, spec_file in zip(records, specs['spec_file']):
+        write_ms_file(record, Path(spec_file))
+
+    # Save labels file
+    specs.to_csv(args.out_labels, sep='\t', index=False)
     print(f'Wrote {len(specs)} spectra to {args.out_spectra_dir} and labels to {args.out_labels}')
 
     if args.out_split:
-        write_split(specs, Path(args.out_split), tuple(args.split), seed=args.seed)
+        # Pass list of names, not dataframe
+        write_split(specs['name'].tolist(), Path(args.out_split), tuple(args.split), seed=args.seed)
         print(f'Wrote split file to {args.out_split}')
 
 

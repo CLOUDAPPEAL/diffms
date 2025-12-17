@@ -651,6 +651,7 @@ class PeakFormula(SpecFeaturizer):
         max_peaks: int = None,
         inten_transform: str = "float",
         magma_modulo: int = 512,
+        precursor_type_to_id: dict = None,
         **kwargs,
     ):
         super().__init__(**kwargs)
@@ -666,6 +667,7 @@ class PeakFormula(SpecFeaturizer):
         self.max_peaks = max_peaks
         self.inten_transform = inten_transform
         self.aug_nbits = magma_modulo
+        self.precursor_type_to_id = precursor_type_to_id
         subform_files = list(Path(subform_folder).glob("*.json"))
         self.spec_name_to_subform_file = {i.stem: i for i in subform_files}
 
@@ -853,6 +855,7 @@ class PeakFormula(SpecFeaturizer):
         ion_vec = [utils.get_ion_idx(i) for i in peak_dict["ions"]]
         type_vec = len(forms_vec) * [self.cat_types["frags"]]
         instrument = utils.get_instr_idx(spec.get_instrument())
+        precursor_type = self.precursor_type_to_id.get(spec.get_precursor_type(), 0)
 
         if self.cls_type == "ms1":
             cls_ind = self.cat_types.get("cls")
@@ -932,6 +935,7 @@ class PeakFormula(SpecFeaturizer):
             "magma_fps": fingerprints,
             "magma_aux_loss": self.magma_aux_loss,
             "instrument": instrument,
+            "precursor_type": precursor_type,
         }
         return out_dict
 
@@ -999,6 +1003,9 @@ class PeakFormula(SpecFeaturizer):
         inten_tensors = [torch.from_numpy(j["frag_intens"]) for j in input_list]
         type_tensors = [torch.from_numpy(j["peak_type"]) for j in input_list]
         instrument_tensors = torch.FloatTensor([j["instrument"] for j in input_list])
+        precursor_type_tensors = torch.FloatTensor(
+            [j["precursor_type"] for j in input_list]
+        )
         ion_tensors = [torch.FloatTensor(j["ion_vec"]) for j in input_list]
 
         peak_form_lens = np.array([i.shape[0] for i in peak_form_tensors])
@@ -1059,6 +1066,7 @@ class PeakFormula(SpecFeaturizer):
             "names": names,
             "num_peaks": num_peaks,
             "instruments": instrument_tensors,
+            "precursor_types": precursor_type_tensors,
         }
 
         return_dict.update(magma_dict)

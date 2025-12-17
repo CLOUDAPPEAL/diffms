@@ -16,6 +16,7 @@ class Spectra(object):
         spectra_file: str = "",
         spectra_formula: str = "",
         instrument: str = "",
+        precursor_type: str = "",
         **kwargs,
     ):
         """_summary_
@@ -25,11 +26,13 @@ class Spectra(object):
             spectra_file (str, optional): _description_. Defaults to "".
             spectra_formula (str, optional): _description_. Defaults to "".
             instrument (str, optional): _description_. Defaults to "".
+            precursor_type (str, optional): _description_. Defaults to "".
         """
         self.spectra_name = spectra_name
         self.spectra_file = spectra_file
         self.formula = spectra_formula
         self.instrument = instrument
+        self.precursor_type = precursor_type
 
         ##
         self._is_loaded = False

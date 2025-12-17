@@ -95,6 +95,9 @@ def write_ms_file(rec: Dict, out_path: Path) -> None:
     
     if 'Precursor_type' in rec:
         lines.append(f"#PRECURSORTYPE {rec.get('Precursor_type')}")
+    
+    if 'Collision_energy' in rec:
+        lines.append(f"#COLLISIONENERGY {rec.get('Collision_energy')}")
 
     if 'Formula' in rec:
         lines.append(f"#FORMULA {rec.get('Formula')}")
@@ -119,16 +122,17 @@ def build_labels(records, out_dir):
         records:
         out_dir:
     """
-    names, formulas, smiles, inchikeys, spec_files, precursor_types = [], [], [], [], [], []
+    names, formulas, smiles, inchikeys, spec_files, precursor_types, collision_energies = [], [], [], [], [], [], []
     if not Path(out_dir).exists():
         Path(out_dir).mkdir(exist_ok=True, parents=True)
     for i, record in enumerate(records):
-        spec_name = str(i)
+        spec_name = f"spec_{i:06d}"
         names.append(spec_name)
         formulas.append(record.get("Formula", "Unknown"))
         smiles.append(record.get("SMILES", "Unknown"))
         inchikeys.append(record.get("InChIKey", "Unknown"))
         precursor_types.append(record.get("Precursor_type", "Unknown"))
+        collision_energies.append(record.get("Collision_energy", "0.0"))
         spec_file = Path(out_dir) / f"{spec_name}.ms"
         spec_files.append(str(spec_file))
     df = pd.DataFrame(
@@ -139,6 +143,7 @@ def build_labels(records, out_dir):
             "inchikey": inchikeys,
             "spec_file": spec_files,
             "precursor_type": precursor_types,
+            "collision_energy": collision_energies,
         }
     )
     return df

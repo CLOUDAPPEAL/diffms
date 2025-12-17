@@ -24,6 +24,15 @@ class ChargeFeature:
         self.valencies = valencies
 
     def __call__(self, noisy_data):
+        """
+        current_valencies的计算有问题，argmax返回的是索引，而不是值。
+        可修改为：
+        bond_indices = noisy_data['E_t'].argmax(dim=-1)
+
+        current_bond_orders = bond_orders_values[bond_indices]
+        
+        current_valencies = current_bond_orders.sum(dim=-1)
+        """
         bond_orders = torch.tensor([0, 1, 2, 3, 1.5], device=noisy_data['E_t'].device).reshape(1, 1, 1, -1)
         weighted_E = noisy_data['E_t'] * bond_orders      # (bs, n, n, de)
         current_valencies = weighted_E.argmax(dim=-1).sum(dim=-1)   # (bs, n)
@@ -40,6 +49,9 @@ class ValencyFeature:
         pass
 
     def __call__(self, noisy_data):
+        """
+        同ChargeFeature类，加的是索引而不是值，有待商榷。
+        """
         orders = torch.tensor([0, 1, 2, 3, 1.5], device=noisy_data['E_t'].device).reshape(1, 1, 1, -1)
         E = noisy_data['E_t'] * orders      # (bs, n, n, de)
         valencies = E.argmax(dim=-1).sum(dim=-1)    # (bs, n)

@@ -936,6 +936,7 @@ class PeakFormula(SpecFeaturizer):
             "magma_aux_loss": self.magma_aux_loss,
             "instrument": instrument,
             "precursor_type": precursor_type,
+            "collision_energy": spec.get_collision_energy(),
         }
         return out_dict
 
@@ -1006,6 +1007,9 @@ class PeakFormula(SpecFeaturizer):
         precursor_type_tensors = torch.FloatTensor(
             [j["precursor_type"] for j in input_list]
         )
+        collision_energy_tensors = torch.FloatTensor(
+            [j["collision_energy"] for j in input_list]
+        ).unsqueeze(1)
         ion_tensors = [torch.FloatTensor(j["ion_vec"]) for j in input_list]
 
         peak_form_lens = np.array([i.shape[0] for i in peak_form_tensors])
@@ -1067,6 +1071,7 @@ class PeakFormula(SpecFeaturizer):
             "num_peaks": num_peaks,
             "instruments": instrument_tensors,
             "precursor_types": precursor_type_tensors,
+            "collision_energy": collision_energy_tensors,
         }
 
         return_dict.update(magma_dict)

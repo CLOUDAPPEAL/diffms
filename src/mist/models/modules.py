@@ -126,6 +126,7 @@ class FormulaTransformer(nn.Module):
             + self.instr_dim
             + self.inten_feats
             + self.adduct_dim
+            + 1 # collision energy
         )
 
         self.intermediate_layer = MLPBlocks(
@@ -210,6 +211,12 @@ class FormulaTransformer(nn.Module):
             inten_tensor,
             embedded_instruments,
         ]
+
+        # Add collision energy
+        collision_energy = batch["collision_energy"] # (B, 1)
+        collision_energy = collision_energy[:, None, :].repeat(1, peak_dim, 1) # (B, Np, 1)
+        input_vec.append(collision_energy)
+
         input_vec = torch.cat(input_vec, dim=-1)
         peak_tensor = self.intermediate_layer(input_vec)
 

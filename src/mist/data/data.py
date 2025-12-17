@@ -45,6 +45,14 @@ class Spectra(object):
     def get_instrument(self):
         return self.instrument
 
+    def get_precursor_type(self):
+        return self.precursor_type
+
+    def get_collision_energy(self):
+        if not self._is_loaded:
+            self._load_spectra()
+        return self.collision_energy
+
     def _load_spectra(self):
         """Load the spectra from files"""
         meta, spectrum_tuples = utils.parse_spectra(self.spectra_file)
@@ -61,6 +69,17 @@ class Spectra(object):
             self.parentmass = 0
         else:
             self.parentmass = float(self.parentmass)
+
+        # Extract collision energy
+        self.collision_energy = self.meta.get("Collision_energy", None)
+        if self.collision_energy is None:
+             self.collision_energy = 0.0
+        else:
+            # Handle "30.0 eV" format
+            if isinstance(self.collision_energy, str):
+                self.collision_energy = float(self.collision_energy.replace(" eV", "").strip())
+            else:
+                 self.collision_energy = float(self.collision_energy)
 
         # Store all the spectrum names (e.g., e.v.) and spectra arrays
         self.spectrum_names, self.spectra = zip(*spectrum_tuples)
